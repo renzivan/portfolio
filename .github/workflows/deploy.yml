@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-portfolio
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy renzivan.com
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        env:
+          SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
+          HOST: ${{ secrets.DROPLET_HOST }}
+          USER: ${{ secrets.DROPLET_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+          # The droplet pins this key to /home/renz/sites/deploy-portfolio.sh
+          # as a forced command, so the remote command here is ignored.
+          ssh -i ~/.ssh/deploy_key -o IdentitiesOnly=yes "$USER@$HOST" deploy
