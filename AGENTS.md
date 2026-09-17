@@ -6,7 +6,7 @@ Guidance for any AI coding agent (Claude Code, Codex, Cursor, Windsurf, Aider, e
 
 Personal portfolio site for **Renz Ivan Enguio** — fullstack engineer, Philippines.
 
-- Live: GitHub Pages (`renzivan.github.io`)
+- Live: [renzivan.com](https://renzivan.com), served off disk by the Caddy edge proxy on the personal droplet
 - Stack: Single-page static HTML + Tailwind CDN + vanilla JS. No build step.
 - Theme: Cosmic (dark default + light mode toggle, localStorage-persisted)
 - Typography: Space Grotesk (display) + Inter (body) via Google Fonts
@@ -121,7 +121,11 @@ Featured wide card uses `md:col-span-2` and a `grid md:grid-cols-2` inside.
 
 ## Deployment
 
-Pushing to `master` deploys via GitHub Pages. No CI workflow currently. Confirm with user before commit/push.
+Pushing to `master` deploys to <https://renzivan.com>: `.github/workflows/deploy.yml` SSHes to the droplet and runs `~/sites/deploy-portfolio.sh`, which fetches and hard-resets the checkout it serves.
+Confirm with user before commit/push.
+
+GitHub Pages is gone and is not coming back.
+The repo was renamed from `renzivan.github.io` to `portfolio` specifically so Pages could be deleted — renaming it back would republish the old site.
 
 ## Commit rules
 
