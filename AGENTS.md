@@ -18,11 +18,15 @@ Personal portfolio site for **Renz Ivan Enguio** — fullstack engineer, Philipp
 | `index.html` | Main portfolio page (cosmic theme). Single-file build — Tailwind CDN, inline CSS, inline JS. |
 | `index-legacy.html` | Previous "Hyperspace by HTML5 UP" version. Kept as archive — do not edit. |
 | `elements.html`, `generic.html` | Legacy HTML5 UP demo pages. Ignore. |
+| `forms.css` | Styles for the contact-form Worker's no-JS failure page. |
+| `contact/sent/index.html` | "Message sent" page the contact form lands on with JS off. |
 | `cv.pdf` | Current CV download. |
 | `images/` | Project screenshots, OG images. |
 | `assets/` | Legacy theme CSS/JS — only used by `index-legacy.html`. |
 | `AGENTS.md` | This file. |
 | `README.md` | GitHub repo readme. |
+
+`forms.css` and `contact/sent/index.html` are separate files on purpose, an exception to the single-file rule: the forms Worker links `/forms.css` from its no-JS fallback page and redirects to `/contact/sent/`.
 
 ## Key conventions
 

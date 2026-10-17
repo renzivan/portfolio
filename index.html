@@ -325,6 +325,8 @@
       opacity: 1 !important;
       transform: none !important;
     }
+    .btn-cosmic:hover { transform: none; }
+    html { scroll-behavior: auto; }
   }
 
   /* Focus */
@@ -333,7 +335,105 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
+
+  /* CONTACT FORM
+     Plain CSS rather than Tailwind utilities: the Play CDN is a script, and the form must look right with JS off. */
+  :root {
+    --cf-card: rgba(5, 6, 15, 0.42); /* a darker well than .glass, so labels and errors keep contrast over the pink nebula */
+    --field: rgba(5, 6, 15, 0.38);
+    --field-border: rgba(167, 139, 250, 0.32);
+    --ring: rgba(167, 139, 250, 0.35);
+    --danger: #fda4af;
+    --danger-border: rgba(253, 164, 175, 0.7);
+    --danger-ring: rgba(253, 164, 175, 0.3);
+    --danger-bg: rgba(253, 164, 175, 0.08);
+  }
+  html:not(.dark) {
+    --cf-card: var(--surface);
+    --field: rgba(255, 255, 255, 0.8);
+    --field-border: rgba(76, 29, 149, 0.28);
+    --ring: rgba(124, 58, 237, 0.25);
+    --danger: #be123c;
+    --danger-border: rgba(190, 18, 60, 0.6);
+    --danger-ring: rgba(190, 18, 60, 0.2);
+    --danger-bg: rgba(190, 18, 60, 0.06);
+  }
+  .cf-wrap { max-width: 48rem; margin: 2.5rem auto 0; text-align: left; }
+  .cf-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+  }
+  .cf-divider::before, .cf-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .cf-divider span { padding-left: 0.3em; } /* balances the trailing letter-spacing so the label sits centred */
+  .cf-card { border-radius: 1rem; padding: 1.25rem; background: var(--cf-card); }
+  .cf-grid { display: grid; gap: 1.25rem; }
+  .cf-field { min-width: 0; }
+  .cf-field label { display: block; margin-bottom: 0.5rem; font-size: 0.875rem; font-weight: 500; line-height: 1.25rem; color: var(--text); }
+  .cf-control {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    font: inherit;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    color: var(--text);
+    background: var(--field);
+    border: 1px solid var(--field-border);
+    border-radius: 0.75rem;
+    color-scheme: dark;
+    scroll-margin-top: 6.5rem; /* focusing the first invalid field keeps it clear of the fixed nav */
+    transition: border-color 200ms ease, box-shadow 200ms ease;
+  }
+  html:not(.dark) .cf-control { color-scheme: light; }
+  .cf-control:hover { border-color: var(--accent); }
+  .cf-control:focus { outline: 2px solid transparent; border-color: var(--accent); box-shadow: 0 0 0 3px var(--ring); }
+  .cf-control[aria-invalid="true"] { border-color: var(--danger-border); }
+  .cf-control[aria-invalid="true"]:focus { border-color: var(--danger); box-shadow: 0 0 0 3px var(--danger-ring); }
+  textarea.cf-control { min-height: 10rem; resize: vertical; }
+  .cf-select { position: relative; }
+  .cf-select .cf-control { appearance: none; -webkit-appearance: none; padding-right: 2.75rem; cursor: pointer; }
+  .cf-select .cf-control:invalid { color: var(--text-mute); } /* the empty "Choose…" option reads as a placeholder */
+  .cf-select .cf-control option { color: var(--text); background: var(--bg); }
+  .cf-select svg { position: absolute; top: 50%; right: 1rem; width: 1rem; height: 1rem; transform: translateY(-50%); color: var(--text-mute); pointer-events: none; }
+  .cf-error { margin: 0.5rem 0 0; font-size: 0.875rem; line-height: 1.25rem; color: var(--danger); }
+  .cf-error:empty { display: none; }
+  .cf-alert {
+    margin: 0 0 1.25rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.5rem;
+    color: var(--text);
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-radius: 0.75rem;
+  }
+  .cf-alert a { color: var(--accent); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: break-word; cursor: pointer; }
+  .cf-actions { margin-top: 1.5rem; }
+  .cf-submit { justify-content: center; width: 100%; font: inherit; font-weight: 500; }
+  .cf-submit[disabled] { opacity: 0.7; cursor: progress; transform: none; box-shadow: none; }
+  .cf-hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+  .cf-sent { display: flex; align-items: flex-start; gap: 1rem; scroll-margin-top: 6.5rem; scroll-margin-bottom: 1.5rem; }
+  .cf-sent:focus { outline: none; }
+  .cf-sent-icon { display: flex; flex-shrink: 0; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; border-radius: 0.75rem; color: #fff; background: linear-gradient(135deg, var(--accent), var(--accent-2)); }
+  .cf-sent-icon svg { width: 1.25rem; height: 1.25rem; }
+  .cf-sent-title { margin: 0; font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; line-height: 1.75rem; color: var(--text); }
+  .cf-sent-text { margin: 0.25rem 0 0; font-size: 1rem; line-height: 1.5rem; color: var(--text-mute); }
+  @media (min-width: 640px) {
+    .cf-card { padding: 1.75rem; }
+    .cf-grid { grid-template-columns: 1fr 1fr; }
+    .cf-span { grid-column: 1 / -1; }
+    .cf-submit { width: auto; }
+  }
 </style>
+<noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
 </head>
 
 <body class="font-body">
@@ -628,7 +728,7 @@
 
 <!-- CONTACT -->
 <section id="contact" class="relative px-6 py-24 max-w-5xl mx-auto">
-  <div class="glass-strong rounded-3xl p-10 md:p-16 text-center reveal relative overflow-hidden">
+  <div class="glass-strong rounded-3xl px-5 py-10 sm:p-10 md:p-16 text-center reveal relative overflow-hidden">
     <div class="absolute inset-0 -z-10 opacity-30" style="background: radial-gradient(circle at 30% 20%, var(--accent), transparent 50%), radial-gradient(circle at 70% 80%, var(--accent-2), transparent 50%);"></div>
 
     <div class="text-xs uppercase tracking-[0.3em] text-[var(--text-mute)] mb-3">Transmission Channel</div>
@@ -677,6 +777,72 @@
         </div>
       </a>
 
+    </div>
+
+    <div class="cf-wrap">
+      <div class="cf-divider" aria-hidden="true"><span>Or send a message</span></div>
+
+      <form id="contact-form" class="cf-card glass" aria-label="Send a message" method="post" action="/api/forms/renzivan">
+        <div id="cf-status" role="status" aria-live="polite"></div>
+
+        <input type="hidden" name="page" value="/#contact" />
+        <div class="cf-hp" aria-hidden="true">
+          <label for="cf-website">Website</label>
+          <input type="text" id="cf-website" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        </div>
+
+        <div class="cf-grid">
+          <div class="cf-field cf-span">
+            <label for="cf-category">What's it about?</label>
+            <div class="cf-select">
+              <select id="cf-category" name="category" class="cf-control" required aria-describedby="cf-category-error">
+                <option value="">Choose…</option>
+                <option value="work">Work enquiry</option>
+                <option value="general">General</option>
+              </select>
+              <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <p id="cf-category-error" class="cf-error"></p>
+          </div>
+
+          <div class="cf-field">
+            <label for="cf-email">Your email</label>
+            <input type="email" id="cf-email" name="email" class="cf-control" required maxlength="254" autocomplete="email" spellcheck="false" aria-describedby="cf-email-error" />
+            <p id="cf-email-error" class="cf-error"></p>
+          </div>
+
+          <div class="cf-field">
+            <label for="cf-name">Your name (optional)</label>
+            <input type="text" id="cf-name" name="name" class="cf-control" maxlength="100" autocomplete="name" aria-describedby="cf-name-error" />
+            <p id="cf-name-error" class="cf-error"></p>
+          </div>
+
+          <div class="cf-field cf-span">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" class="cf-control" required maxlength="5000" rows="6" aria-describedby="cf-message-error"></textarea>
+            <p id="cf-message-error" class="cf-error"></p>
+          </div>
+        </div>
+
+        <div class="cf-actions">
+          <button type="submit" class="btn-cosmic btn-primary cf-submit">
+            <span class="cf-submit-label">Send</span>
+            <svg class="w-4 h-4" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <template id="cf-sent-template">
+        <div class="cf-card cf-sent glass" tabindex="-1" role="status" aria-labelledby="cf-sent-title" aria-describedby="cf-sent-text">
+          <div class="cf-sent-icon" aria-hidden="true">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <div>
+            <p id="cf-sent-title" class="cf-sent-title">Message sent.</p>
+            <p id="cf-sent-text" class="cf-sent-text">I read every message and will reply to your email address.</p>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
 </section>
@@ -753,6 +919,110 @@
     }
     document.querySelectorAll('.yoe').forEach(el => el.textContent = years);
     document.querySelectorAll('.yoe-plus').forEach(el => el.textContent = years + '+');
+  })();
+
+  // CONTACT FORM — progressive enhancement. Without JS the form posts natively and the server redirects to /contact/sent/.
+  (function() {
+    const form = document.getElementById('contact-form');
+    if (!form || !window.fetch || !window.URLSearchParams) return;
+    const status = document.getElementById('cf-status');
+    const submit = form.querySelector('.cf-submit');
+    const submitLabel = submit.querySelector('.cf-submit-label');
+    const FIELDS = ['category', 'email', 'name', 'message']; // DOM order, so the first error found is the first on screen
+    const EMAIL = 'renzivanyapenguio@gmail.com';
+    let sending = false;
+
+    function showAlert(...nodes) {
+      const p = document.createElement('p');
+      p.className = 'cf-alert';
+      p.setAttribute('role', 'alert');
+      p.append(...nodes);
+      status.replaceChildren(p);
+    }
+
+    function clearFieldError(name) {
+      form.elements[name].removeAttribute('aria-invalid');
+      document.getElementById('cf-' + name + '-error').textContent = '';
+    }
+
+    function clearErrors() {
+      status.replaceChildren();
+      FIELDS.forEach(clearFieldError);
+    }
+
+    // Editing a field clears its own error, so a corrected field stops reading as invalid before the next send.
+    FIELDS.forEach((name) => {
+      form.elements[name].addEventListener('input', () => {
+        if (form.elements[name].hasAttribute('aria-invalid')) clearFieldError(name);
+      });
+    });
+
+    function setBusy(busy) {
+      sending = busy;
+      submit.disabled = busy;
+      submitLabel.textContent = busy ? 'Sending…' : 'Send';
+      form.setAttribute('aria-busy', String(busy));
+    }
+
+    function showSent() {
+      const sent = document.getElementById('cf-sent-template').content.firstElementChild.cloneNode(true);
+      form.replaceWith(sent);
+      sent.focus({ preventScroll: true });
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      sent.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    }
+
+    function showInvalid(fields) {
+      let first = null;
+      FIELDS.forEach((name) => {
+        const msg = fields[name];
+        if (typeof msg !== 'string' || !msg) return;
+        const control = form.elements[name];
+        control.setAttribute('aria-invalid', 'true');
+        document.getElementById('cf-' + name + '-error').textContent = msg;
+        first = first || control;
+      });
+      if (first) first.focus();
+      else showFailure();
+    }
+
+    function showFailure() {
+      const link = document.createElement('a');
+      link.href = 'mailto:' + EMAIL;
+      // A <wbr> after the @ lets a narrow phone wrap the address there rather than mid-domain.
+      const at = EMAIL.indexOf('@') + 1;
+      link.append(EMAIL.slice(0, at), document.createElement('wbr'), EMAIL.slice(at));
+      showAlert("Couldn't send your message. Please try again later, or email me directly.", document.createElement('br'), link);
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (sending) return;
+      clearErrors();
+      setBusy(true);
+      let res = null;
+      let data = null;
+      try {
+        res = await fetch(form.getAttribute('action'), {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new URLSearchParams(new FormData(form)),
+        });
+        data = await res.json();
+      } catch (_) {
+        // A network failure leaves res null; a non-JSON body leaves data null. Both fall through to the generic failure.
+      }
+      if (res && res.ok && data && data.ok === true) return showSent();
+      setBusy(false);
+      if (res && res.status === 400 && data && data.error === 'invalid' && data.fields && typeof data.fields === 'object') {
+        showInvalid(data.fields);
+      } else if (res && res.status === 429) {
+        showAlert("You've sent several messages in a short time. Please wait an hour and try again.");
+      } else {
+        showFailure();
+      }
+      if (document.activeElement === document.body || document.activeElement === submit) submit.focus();
+    });
   })();
 </script>
 

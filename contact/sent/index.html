@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Message sent — Renz Ivan Enguio</title>
+
+<script>
+  // Same rule as the home page: the stored theme, else the system preference. Runs before paint so light users see no dark flash.
+  (function() {
+    let stored = null;
+    try { stored = localStorage.getItem('theme'); } catch (_) {}
+    const mode = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    if (mode === 'light') document.documentElement.classList.remove('dark');
+  })();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* Theme tokens copied from /index.html — keep them in step. Plain CSS, no Tailwind: visitors arrive here with JS off. */
+  :root {
+    --bg: #05060f;
+    --surface: rgba(255, 255, 255, 0.04);
+    --surface-strong: rgba(255, 255, 255, 0.07);
+    --border: rgba(167, 139, 250, 0.18);
+    --text: #f8fafc;
+    --text-mute: #c4b5fd;
+    --accent: #a78bfa;
+    --accent-2: #22d3ee;
+    --ember: #f472b6;
+    --star: #ffffff;
+  }
+  html:not(.dark) {
+    --bg: #f5f3ff;
+    --surface: rgba(255, 255, 255, 0.65);
+    --surface-strong: rgba(255, 255, 255, 0.85);
+    --border: rgba(76, 29, 149, 0.18);
+    --text: #1e1b4b;
+    --text-mute: #4c1d95;
+    --accent: #7c3aed;
+    --accent-2: #0891b2;
+    --ember: #db2777;
+    --star: #4c1d95;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  .cosmos-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .nebula { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; animation: drift 22s ease-in-out infinite; }
+  .nebula-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, #6d28d9 0%, transparent 70%); }
+  .nebula-2 { top: 30%; right: -15%; width: 45vw; height: 45vw; background: radial-gradient(circle, #22d3ee 0%, transparent 70%); animation-delay: -7s; opacity: 0.35; }
+  .nebula-3 { bottom: -15%; left: 20%; width: 55vw; height: 55vw; background: radial-gradient(circle, #f472b6 0%, transparent 70%); animation-delay: -14s; opacity: 0.3; }
+  html:not(.dark) .nebula-1 { background: radial-gradient(circle, #c4b5fd 0%, transparent 70%); opacity: 0.7; }
+  html:not(.dark) .nebula-2 { background: radial-gradient(circle, #fde68a 0%, transparent 70%); opacity: 0.6; }
+  html:not(.dark) .nebula-3 { background: radial-gradient(circle, #fda4af 0%, transparent 70%); opacity: 0.5; }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.1); }
+  }
+  .starfield {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 12% 22%, var(--star), transparent),
+      radial-gradient(1px 1px at 28% 65%, var(--star), transparent),
+      radial-gradient(1.5px 1.5px at 42% 18%, var(--star), transparent),
+      radial-gradient(1px 1px at 55% 80%, var(--star), transparent),
+      radial-gradient(1px 1px at 68% 35%, var(--star), transparent),
+      radial-gradient(1.5px 1.5px at 82% 60%, var(--star), transparent),
+      radial-gradient(1px 1px at 92% 12%, var(--star), transparent),
+      radial-gradient(1px 1px at 7% 88%, var(--star), transparent),
+      radial-gradient(2px 2px at 78% 78%, var(--star), transparent),
+      radial-gradient(1.5px 1.5px at 88% 28%, var(--star), transparent);
+    opacity: 0.85;
+  }
+  html:not(.dark) .starfield { opacity: 0.25; }
+
+  .card {
+    width: 100%;
+    max-width: 34rem;
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    background: var(--surface-strong);
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid var(--border);
+    border-radius: 1.5rem;
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0 auto 1.5rem;
+    border-radius: 1rem;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  }
+  .icon svg { width: 1.75rem; height: 1.75rem; }
+  .eyebrow { margin: 0 0 0.75rem; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-mute); }
+  h1 { margin: 0 0 1rem; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 2.25rem; font-weight: 700; line-height: 1.1; }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--ember) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  p.lead { margin: 0 auto 2rem; max-width: 26rem; font-size: 1.0625rem; line-height: 1.65; color: var(--text-mute); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    cursor: pointer;
+    transition: box-shadow 250ms ease, transform 250ms ease;
+  }
+  .btn:hover { box-shadow: 0 0 40px -5px var(--accent), 0 0 60px -10px var(--accent-2); transform: translateY(-2px); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .btn svg { width: 1rem; height: 1rem; }
+
+  @media (min-width: 640px) {
+    .card { padding: 3.5rem 3rem; }
+    h1 { font-size: 3rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nebula { animation: none; }
+    .btn { transition: none; }
+    .btn:hover { transform: none; }
+  }
+</style>
+</head>
+
+<body>
+<div class="cosmos-bg" aria-hidden="true">
+  <div class="starfield"></div>
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
+  <div class="nebula nebula-3"></div>
+</div>
+
+<main class="card">
+  <div class="icon" aria-hidden="true">
+    <svg fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <p class="eyebrow">Transmission received</p>
+  <h1>Message <span class="gradient-text">sent</span></h1>
+  <p class="lead">I read every message and will reply to your email address.</p>
+  <a href="/#contact" class="btn">
+    <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>
+    Back to the site
+  </a>
+</main>
+</body>
+</html>

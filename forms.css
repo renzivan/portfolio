@@ -1,0 +1,191 @@
+/*
+ * Styles for the contact-form Worker's no-JS failure page (forms repo, src/respond.ts → fallbackPage).
+ * That page links only this file and is served with CSP default-src 'self', so web fonts, inline
+ * styles and scripts are all blocked: system fonts only, everything here. It has no theme toggle,
+ * so it follows the system preference — the same fallback the home page uses with no stored theme.
+ * Markup styled: body > main.forms-fallback > h1, p (lead, may hold a mailto <a>), ul > li,
+ * label[for=message], textarea#message[readonly], p > a (back link).
+ */
+
+:root {
+  --bg: #05060f;
+  --surface-strong: rgba(255, 255, 255, 0.07);
+  --border: rgba(167, 139, 250, 0.18);
+  --field: rgba(255, 255, 255, 0.05);
+  --field-border: rgba(167, 139, 250, 0.32);
+  --text: #f8fafc;
+  --text-mute: #c4b5fd;
+  --accent: #a78bfa;
+  --accent-2: #22d3ee;
+  --danger: #fda4af;
+  --danger-bg: rgba(253, 164, 175, 0.08);
+  --danger-border: rgba(253, 164, 175, 0.7);
+  --glow-1: rgba(109, 40, 217, 0.45);
+  --glow-2: rgba(34, 211, 238, 0.22);
+  --glow-3: rgba(244, 114, 182, 0.2);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f5f3ff;
+    --surface-strong: rgba(255, 255, 255, 0.85);
+    --border: rgba(76, 29, 149, 0.18);
+    --field: rgba(255, 255, 255, 0.8);
+    --field-border: rgba(76, 29, 149, 0.28);
+    --text: #1e1b4b;
+    --text-mute: #4c1d95;
+    --accent: #7c3aed;
+    --accent-2: #0891b2;
+    --danger: #be123c;
+    --danger-bg: rgba(190, 18, 60, 0.06);
+    --danger-border: rgba(190, 18, 60, 0.6);
+    --glow-1: rgba(196, 181, 253, 0.7);
+    --glow-2: rgba(253, 230, 138, 0.55);
+    --glow-3: rgba(253, 164, 175, 0.45);
+    color-scheme: light;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg);
+  /* The home page's nebula blobs, as fixed gradients: no images, nothing for the CSP to block. */
+  background-image:
+    radial-gradient(ellipse 60vw 60vw at 0% 0%, var(--glow-1), transparent 70%),
+    radial-gradient(ellipse 50vw 50vw at 100% 45%, var(--glow-2), transparent 70%),
+    radial-gradient(ellipse 60vw 60vw at 40% 110%, var(--glow-3), transparent 70%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.forms-fallback {
+  width: 100%;
+  max-width: 40rem;
+  padding: 2rem 1.25rem;
+  background: var(--surface-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+}
+
+.forms-fallback h1 {
+  margin: 0 0 0.75rem;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.forms-fallback p {
+  margin: 0 0 1.25rem;
+  color: var(--text-mute);
+}
+
+.forms-fallback ul {
+  margin: 0 0 1.5rem;
+  padding: 0.875rem 1rem 0.875rem 2.25rem;
+  color: var(--text);
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-radius: 0.75rem;
+}
+
+.forms-fallback li { margin: 0; }
+.forms-fallback li + li { margin-top: 0.25rem; }
+.forms-fallback li::marker { color: var(--danger); }
+
+.forms-fallback label {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  color: var(--text);
+}
+
+.forms-fallback textarea {
+  display: block;
+  width: 100%;
+  min-height: 12rem;
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--text);
+  background: var(--field);
+  border: 1px solid var(--field-border);
+  border-radius: 0.75rem;
+  resize: vertical;
+}
+
+.forms-fallback textarea:focus {
+  outline: 2px solid transparent;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.35);
+}
+
+.forms-fallback a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.forms-fallback a:hover { color: var(--accent-2); }
+
+.forms-fallback a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* The back link is the page's last paragraph: give it the site's primary pill button. */
+.forms-fallback p:last-child { margin: 0; }
+
+.forms-fallback p:last-child a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  color: #fff;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  border-radius: 9999px;
+  transition: box-shadow 250ms ease, transform 250ms ease;
+}
+
+.forms-fallback p:last-child a:hover {
+  color: #fff;
+  box-shadow: 0 0 40px -5px var(--accent), 0 0 60px -10px var(--accent-2);
+  transform: translateY(-2px);
+}
+
+.forms-fallback p:last-child a:focus-visible { border-radius: 9999px; }
+
+@media (min-width: 640px) {
+  .forms-fallback { padding: 2.75rem 3rem; }
+  .forms-fallback h1 { font-size: 2.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forms-fallback p:last-child a { transition: none; }
+  .forms-fallback p:last-child a:hover { transform: none; }
+}
