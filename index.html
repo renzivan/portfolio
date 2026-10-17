@@ -398,11 +398,6 @@
   .cf-control[aria-invalid="true"] { border-color: var(--danger-border); }
   .cf-control[aria-invalid="true"]:focus { border-color: var(--danger); box-shadow: 0 0 0 3px var(--danger-ring); }
   textarea.cf-control { min-height: 10rem; resize: vertical; }
-  .cf-select { position: relative; }
-  .cf-select .cf-control { appearance: none; -webkit-appearance: none; padding-right: 2.75rem; cursor: pointer; }
-  .cf-select .cf-control:invalid { color: var(--text-mute); } /* the empty "Choose…" option reads as a placeholder */
-  .cf-select .cf-control option { color: var(--text); background: var(--bg); }
-  .cf-select svg { position: absolute; top: 50%; right: 1rem; width: 1rem; height: 1rem; transform: translateY(-50%); color: var(--text-mute); pointer-events: none; }
   .cf-error { margin: 0.5rem 0 0; font-size: 0.875rem; line-height: 1.25rem; color: var(--danger); }
   .cf-error:empty { display: none; }
   .cf-alert {
@@ -792,19 +787,6 @@
         </div>
 
         <div class="cf-grid">
-          <div class="cf-field cf-span">
-            <label for="cf-category">What's it about?</label>
-            <div class="cf-select">
-              <select id="cf-category" name="category" class="cf-control" required aria-describedby="cf-category-error">
-                <option value="">Choose…</option>
-                <option value="work">Work enquiry</option>
-                <option value="general">General</option>
-              </select>
-              <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </div>
-            <p id="cf-category-error" class="cf-error"></p>
-          </div>
-
           <div class="cf-field">
             <label for="cf-email">Your email</label>
             <input type="email" id="cf-email" name="email" class="cf-control" required maxlength="254" autocomplete="email" spellcheck="false" aria-describedby="cf-email-error" />
@@ -928,7 +910,7 @@
     const status = document.getElementById('cf-status');
     const submit = form.querySelector('.cf-submit');
     const submitLabel = submit.querySelector('.cf-submit-label');
-    const FIELDS = ['category', 'email', 'name', 'message']; // DOM order, so the first error found is the first on screen
+    const FIELDS = ['email', 'name', 'message']; // DOM order, so the first error found is the first on screen
     const EMAIL = 'renzivanyapenguio@gmail.com';
     let sending = false;
 
