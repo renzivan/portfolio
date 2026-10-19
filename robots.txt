@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /index-bold.html
+Disallow: /index-cosmic.html
+Disallow: /index-editorial.html
+Disallow: /index-graphify.html
+Disallow: /index-legacy.html
+Disallow: /index-terminal.html
+Disallow: /elements.html
+Disallow: /generic.html
+
+Sitemap: https://renzivan.com/sitemap.xml

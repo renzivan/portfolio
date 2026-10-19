@@ -20,6 +20,7 @@ Personal portfolio site for **Renz Ivan Enguio** — fullstack engineer, Philipp
 | `elements.html`, `generic.html` | Legacy HTML5 UP demo pages. Ignore. |
 | `forms.css` | Styles for the contact-form Worker's no-JS failure page. |
 | `contact/sent/index.html` | "Message sent" page the contact form lands on with JS off. |
+| `robots.txt`, `sitemap.xml` | Point search engines at `https://renzivan.com/` and keep the archived variants out of the index. Cloudflare prepends its own content-signal block to `robots.txt`. |
 | `cv.pdf` | Current CV download. |
 | `images/` | Project screenshots, OG images. |
 | `assets/` | Legacy theme CSS/JS — only used by `index-legacy.html`. |
